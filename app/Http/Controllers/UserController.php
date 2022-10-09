@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Service\UserCreateService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -14,14 +15,16 @@ class UserController extends Controller
         return new JsonResponse(User::all());
     }
 
-    public function show(User $user): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        return new JsonResponse($user);
+        return new JsonResponse(User::with('restaurants')->findOrFail($id));
     }
 
-    public function store(Request $request): JsonResponse
-    {
-        $user = User::create($request->toArray());
+    public function store(
+        Request $request,
+        UserCreateService $service
+    ): JsonResponse {
+        $user = $service->create($request->toArray());
 
         return new JsonResponse($user, ResponseAlias::HTTP_CREATED);
     }
