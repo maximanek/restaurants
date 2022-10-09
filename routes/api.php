@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RestaurantController;
 
 /*
@@ -16,9 +16,16 @@ use App\Http\Controllers\RestaurantController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/login', [LoginController::class, 'login']);
+Route::get('/users', [UserController::class, 'index']);
 
-Route::resource('/users', UserController::class);
-Route::resource('/restaurants', RestaurantController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::controller( UserController::class)->prefix('/users')->group(function () {
+        Route::post('','store');
+        Route::patch('/{id}','update');
+        Route::get('/{id}','show');
+        Route::delete('/{id}','destroy');
+    });
+    Route::resource('/restaurants', RestaurantController::class);
+//    Route::patch('/restaurants/{id}/user', [RestaurantController::class, 'editUsers']);
+});
