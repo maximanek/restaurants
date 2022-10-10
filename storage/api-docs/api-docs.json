@@ -1,0 +1,169 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Restaurants API",
+        "description": "API made as recruitment task for WebChefs",
+        "contact": {
+            "email": "contact.maksymilianzieba@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/restaurants": {
+            "get": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "description": "get restaurants",
+                "operationId": "0ef65917394f8eb77311d1d085ff31e4",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
+        "/api/restaurants/{id}": {
+            "get": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "description": "get a specific restaurant",
+                "operationId": "26e68feb8cf848945261ce292866ec2c",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "description": "a restaurant",
+                "operationId": "7270982c262ae0c4e547d5eec368e436",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "description": "update a restaurant",
+                "operationId": "75ad3c4ba7726e9f0d78e83d2f7cec90",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
+        "/api/restaurants/": {
+            "post": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "description": "create a restaurant",
+                "operationId": "2e131f3aa2813fca5dbc5dfbe60d6b4f",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
+        "/api/restaurants/{id}/user": {
+            "patch": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "description": "attach/detach a user to/from restaurant",
+                "operationId": "ee47189bc1fba5c8ff07eef47686d92b",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Get all users",
+                "operationId": "c457726701591d1183b53aa71fc13441",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Add new user",
+                "operationId": "592819a0265360b2014512d6dbfaf0e7",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Get specific user",
+                "operationId": "36a33ff774d5cba33c039dec2c3e0287",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of User to show",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Delete user",
+                "operationId": "fa56cffde745d3f152f95cbacd936c0b",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Update user",
+                "operationId": "872a537e8eb13c26c5542c7d73269a80",
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        }
+    }
+}
