@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Service\UserCreateService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Service\UserCreateService;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class UserController extends Controller

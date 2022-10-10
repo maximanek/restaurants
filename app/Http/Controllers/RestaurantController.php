@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Restaurant;
+use App\Models\User;
 use App\Service\RestaurantCreateService;
 use App\Service\RestaurantUpdateService;
+use App\Validator\RestaurantValidator;
+use App\Validator\UserValidator;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -47,5 +50,23 @@ class RestaurantController extends Controller
         $restaurant->delete();
 
         return new JsonResponse();
+    }
+
+    public function manageUsers(Restaurant $restaurant, Request $request): JsonResponse
+    {
+        $data = $request->getContent();
+
+        foreach ($data as $user) {
+            if ($user['action'] == 'Attach') {
+                if (RestaurantValidator::checkRestaurantLimits($restaurant) &&
+                    UserValidator::checkUserLimits(User::find($user['id']))) {
+                    $restaurant->users()->attach($user['id']);
+                }
+            } else {
+                $restaurant->users()->detach($user['id']);
+            }
+        }
+
+        return new JsonResponse($restaurant);
     }
 }

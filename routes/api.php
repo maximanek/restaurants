@@ -27,5 +27,5 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}','destroy');
     });
     Route::resource('/restaurants', RestaurantController::class);
-//    Route::patch('/restaurants/{id}/user', [RestaurantController::class, 'editUsers']);
+    Route::patch('/restaurants/{id}/user', [RestaurantController::class, 'manageUsers']);
 });
