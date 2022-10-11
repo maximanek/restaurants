@@ -13,6 +13,38 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "description": "Get all users",
+                "operationId": "c5e838284c7f343f0e5e5fd589161c96",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        },
         "/api/restaurants": {
             "get": {
                 "tags": [
@@ -38,7 +70,12 @@
                     "200": {
                         "description": "success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -50,7 +87,12 @@
                     "200": {
                         "description": "success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "patch": {
                 "tags": [
@@ -62,7 +104,12 @@
                     "200": {
                         "description": "success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/restaurants/": {
@@ -76,7 +123,12 @@
                     "200": {
                         "description": "success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/restaurants/{id}/user": {
@@ -90,7 +142,12 @@
                     "200": {
                         "description": "success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/users": {
@@ -116,7 +173,12 @@
                     "200": {
                         "description": "success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "/api/users/{id}": {
@@ -138,7 +200,12 @@
                     "200": {
                         "description": "success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -150,7 +217,12 @@
                     "200": {
                         "description": "success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             },
             "patch": {
                 "tags": [
@@ -162,8 +234,32 @@
                     "200": {
                         "description": "success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         }
-    }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        {
+            "oauth2_security_example": [
+                "read",
+                "write"
+            ],
+            "sanctum": []
+        }
+    ]
 }

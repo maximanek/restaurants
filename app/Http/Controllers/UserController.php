@@ -35,7 +35,8 @@ class UserController extends Controller
      *          in="path",
      *          description="Id of User to show",
      *          required=true
-     *     )
+     *     ),
+     *     security={{"sanctum": {}}}
      * )
      */
     public function show(int $id): JsonResponse
@@ -49,6 +50,7 @@ class UserController extends Controller
      *     tags={"Users"},
      *     description="Add new user",
      *     @OA\Response(response="200", description="success"),
+     *     security={{"sanctum": {}}}
      * )
      */
     public function store(
@@ -66,6 +68,7 @@ class UserController extends Controller
      *     tags={"Users"},
      *     description="Update user",
      *     @OA\Response(response="200", description="success"),
+     *     security={{"sanctum": {}}}
      * )
      */
     public function update(User $user, Request $request): JsonResponse
@@ -81,6 +84,7 @@ class UserController extends Controller
      *     tags={"Users"},
      *     description="Delete user",
      *     @OA\Response(response="200", description="success"),
+     *     security={{"sanctum": {}}}
      * )
      */
     public function destroy(User $user): JsonResponse

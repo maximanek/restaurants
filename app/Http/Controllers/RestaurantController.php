@@ -38,6 +38,7 @@ class RestaurantController extends Controller
      *     path="/api/restaurants/{id}",
      *     tags={"Restaurants"},
      *     description="get a specific restaurant",
+     *     security={{"sanctum": {}}},
      *     @OA\Response(response="200", description="success"),
      * )
      */
@@ -55,6 +56,7 @@ class RestaurantController extends Controller
      *     path="/api/restaurants/",
      *     tags={"Restaurants"},
      *     description="create a restaurant",
+     *     security={{"sanctum": {}}},
      *     @OA\Response(response="200", description="success"),
      * )
      */
@@ -77,6 +79,7 @@ class RestaurantController extends Controller
      *     path="/api/restaurants/{id}",
      *     tags={"Restaurants"},
      *     description="update a restaurant",
+     *     security={{"sanctum": {}}},
      *     @OA\Response(response="200", description="success"),
      * )
      */
@@ -100,6 +103,7 @@ class RestaurantController extends Controller
      *     path="/api/restaurants/{id}",
      *     tags={"Restaurants"},
      *     description="a restaurant",
+     *     security={{"sanctum": {}}},
      *     @OA\Response(response="200", description="success"),
      * )
      */
@@ -119,6 +123,7 @@ class RestaurantController extends Controller
      *     path="/api/restaurants/{id}/user",
      *     tags={"Restaurants"},
      *     description="attach/detach a user to/from restaurant",
+     *     security={{"sanctum": {}}},
      *     @OA\Response(response="200", description="success"),
      * )
      */

@@ -6,11 +6,36 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
-    public function login(Request $request)
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     tags={"Login"},
+     *     description="Get all users",
+     *    @OA\Parameter(
+     *      name="email",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   @OA\Parameter(
+     *      name="password",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     *   ),
+     *     @OA\Response(response="200", description="success"),
+     * )
+     */
+    public function login(Request $request): JsonResponse
     {
         try {
             $user = User::where(['email' => $request->email])->first();
@@ -19,7 +44,7 @@ class LoginController extends Controller
                 return new JsonResponse($user->createToken('API_TOKEN')->plainTextToken);
             }
         } catch (\Exception $exception) {
-            return $exception;
+            return new JsonResponse($exception, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return new JsonResponse('Access Denied', Response::HTTP_FORBIDDEN);
