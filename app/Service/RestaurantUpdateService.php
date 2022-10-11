@@ -2,13 +2,21 @@
 
 namespace App\Service;
 
+use App\Exceptions\RestaurantNotFoundException;
 use App\Models\Restaurant;
 
 class RestaurantUpdateService
 {
+    /**
+     * @throws RestaurantNotFoundException
+     */
     public function update(Restaurant $restaurant, array $data): Restaurant
     {
-        $restaurant->update($data);
+        $success = $restaurant->update($data);
+
+        if (!$success) {
+            throw new RestaurantNotFoundException();
+        }
 
         if (key_exists('users', $data)) {
             foreach ($restaurant->users() as $user) {

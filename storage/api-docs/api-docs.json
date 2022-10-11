@@ -40,7 +40,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Success"
                     },
                     "422": {
                         "description": "uprocesable entity"
@@ -53,11 +53,17 @@
                 "tags": [
                     "Restaurants"
                 ],
-                "description": "get restaurants",
+                "description": "Get all Restaurants",
                 "operationId": "0ef65917394f8eb77311d1d085ff31e4",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Success"
                     }
                 }
             }
@@ -69,9 +75,17 @@
                 ],
                 "description": "get a specific restaurant",
                 "operationId": "26e68feb8cf848945261ce292866ec2c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of Restaurant to show",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Success"
                     }
                 },
                 "security": [
@@ -86,9 +100,20 @@
                 ],
                 "description": "a restaurant",
                 "operationId": "7270982c262ae0c4e547d5eec368e436",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Restaurant not found"
                     }
                 },
                 "security": [
@@ -103,9 +128,31 @@
                 ],
                 "description": "update a restaurant",
                 "operationId": "75ad3c4ba7726e9f0d78e83d2f7cec90",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Restarurant id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Restaurant name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
                 },
                 "security": [
@@ -122,9 +169,23 @@
                 ],
                 "description": "create a restaurant",
                 "operationId": "2e131f3aa2813fca5dbc5dfbe60d6b4f",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Restaurant name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Success"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
                     }
                 },
                 "security": [
@@ -141,9 +202,30 @@
                 ],
                 "description": "attach/detach a user to/from restaurant",
                 "operationId": "ee47189bc1fba5c8ff07eef47686d92b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Restaurant id",
+                        "required": true
+                    },
+                    {
+                        "name": "users",
+                        "in": "query",
+                        "description": "Users to attach/detach",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {}
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Restaurant not found"
                     }
                 },
                 "security": [
@@ -168,7 +250,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Success"
                     }
                 }
             },
@@ -248,7 +330,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Success"
                     },
                     "404": {
                         "description": "User not found"
@@ -276,7 +358,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
                 },
                 "security": [
@@ -303,7 +388,7 @@
                     },
                     {
                         "name": "email",
-                        "in": "path",
+                        "in": "query",
                         "description": "User email",
                         "schema": {
                             "type": "string"
@@ -311,7 +396,7 @@
                     },
                     {
                         "name": "password",
-                        "in": "path",
+                        "in": "query",
                         "description": "User password",
                         "schema": {
                             "type": "string"
@@ -319,7 +404,7 @@
                     },
                     {
                         "name": "name",
-                        "in": "path",
+                        "in": "query",
                         "description": "User name",
                         "schema": {
                             "type": "string"
@@ -327,7 +412,7 @@
                     },
                     {
                         "name": "surname",
-                        "in": "path",
+                        "in": "query",
                         "description": "User surname",
                         "schema": {
                             "type": "string"
@@ -340,6 +425,9 @@
                     },
                     "404": {
                         "description": "User not found"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
                     }
                 },
                 "security": [

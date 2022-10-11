@@ -32,7 +32,7 @@ class LoginController extends Controller
      *          type="string"
      *      )
      *   ),
-     *     @OA\Response(response="200", description="success"),
+     *     @OA\Response(response="200", description="Success"),
      *     @OA\Response(response="422", description="uprocesable entity"),
      * )
      */

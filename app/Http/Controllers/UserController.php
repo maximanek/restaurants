@@ -2,39 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\UserNotFoundException;
 use Exception;
 use App\Models\User;
 use OpenApi\Annotations as OA;
 use Illuminate\Http\JsonResponse;
 use App\Service\UserCreateService;
 use App\Http\Requests\CreateUserRequest;
-use App\Http\Requests\UserIndexRequest;
+use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\UserUpdateRequest;
-use App\Exceptions\UserNotFoundException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserController extends Controller
 {
     /**
+     * @param PaginationRequest $request
+     * @return JsonResponse
+     *
      * @OA\Get(
      *     path="/api/users",
      *     tags={"Users"},
      *     description="Get all users",
      *     @OA\Parameter(
-     *      name="limit",
-     *      in="query",
-     * ),
-     *     @OA\Response(response="200", description="success"),
+     *          name="limit",
+     *          in="query",
+     *      ),
+     *     @OA\Response(response="200", description="Success"),
      * )
      */
-    public function index(UserIndexRequest $request): JsonResponse
+    public function index(PaginationRequest $request): JsonResponse
     {
         $limit = $request->validated('limit');
         return new JsonResponse(User::paginate($limit ?? 15));
     }
 
     /**
+     * @param int $id
+     * @return JsonResponse
+     *
      * @OA\Get(
      *     path="/api/users/{id}",
      *     tags={"Users"},
@@ -46,7 +52,7 @@ class UserController extends Controller
      *          description="Id of User to show",
      *          required=true
      *     ),
-     *     @OA\Response(response="200", description="success"),
+     *     @OA\Response(response="200", description="Success"),
      *     @OA\Response(response="404", description="User not found"),
      * )
      */
@@ -62,6 +68,10 @@ class UserController extends Controller
     }
 
     /**
+     * @param CreateUserRequest $request
+     * @param UserCreateService $service
+     * @return JsonResponse
+     *
      * @OA\Post(
      *     path="/api/users",
      *     security={{"sanctum": {}}},
@@ -117,6 +127,10 @@ class UserController extends Controller
     }
 
     /**
+     * @param User $user
+     * @param UserUpdateRequest $request
+     * @return JsonResponse
+     *
      * @OA\Patch(
      *     path="/api/users/{id}",
      *     tags={"Users"},
@@ -186,6 +200,9 @@ class UserController extends Controller
     }
 
     /**
+     * @param int $id
+     * @return JsonResponse
+     *
      * @OA\Delete(
      *     path="/api/users/{id}",
      *     tags={"Users"},
@@ -197,7 +214,8 @@ class UserController extends Controller
      *          description="User id",
      *          required=true
      *     ),
-     *     @OA\Response(response="200", description="success"),
+     *     @OA\Response(response="200", description="Success"),
+     *     @OA\Response(response="404", description="User not found"),
      * )
      */
     public function destroy(int $id): JsonResponse
