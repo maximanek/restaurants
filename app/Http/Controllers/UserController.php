@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\User;
-use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 use Illuminate\Http\JsonResponse;
 use App\Service\UserCreateService;
-use OpenApi\Annotations as OA;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UserIndexRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Exceptions\UserNotFoundException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserController extends Controller
 {
@@ -16,12 +21,17 @@ class UserController extends Controller
      *     path="/api/users",
      *     tags={"Users"},
      *     description="Get all users",
+     *     @OA\Parameter(
+     *      name="limit",
+     *      in="query",
+     * ),
      *     @OA\Response(response="200", description="success"),
      * )
      */
-    public function index(): JsonResponse
+    public function index(UserIndexRequest $request): JsonResponse
     {
-        return new JsonResponse(User::all());
+        $limit = $request->validated('limit');
+        return new JsonResponse(User::paginate($limit ?? 15));
     }
 
     /**
@@ -29,35 +39,79 @@ class UserController extends Controller
      *     path="/api/users/{id}",
      *     tags={"Users"},
      *     description="Get specific user",
-     *     @OA\Response(response="200", description="success"),
+     *     security={{"sanctum": {}}},
      *     @OA\Parameter(
      *          name="id",
      *          in="path",
      *          description="Id of User to show",
      *          required=true
      *     ),
-     *     security={{"sanctum": {}}}
+     *     @OA\Response(response="200", description="success"),
+     *     @OA\Response(response="404", description="User not found"),
      * )
      */
     public function show(int $id): JsonResponse
     {
-        return new JsonResponse(User::with('restaurants')->findOrFail($id));
+        try {
+            $user = User::with('restaurants')->findOrFail($id);
+        } catch (Exception $exception) {
+            return new JsonResponse($exception->getMessage(), ResponseAlias::HTTP_NOT_FOUND);
+        }
+
+        return new JsonResponse($user);
     }
 
     /**
      * @OA\Post(
      *     path="/api/users",
+     *     security={{"sanctum": {}}},
      *     tags={"Users"},
      *     description="Add new user",
-     *     @OA\Response(response="200", description="success"),
-     *     security={{"sanctum": {}}}
+     *     @OA\Parameter(
+     *          name="email",
+     *          in="query",
+     *          description="User email",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *     ),
+     *     @OA\Parameter(
+     *          name="password",
+     *          in="query",
+     *          description="User password",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *     ),
+     *     @OA\Parameter(
+     *          name="name",
+     *          in="query",
+     *          description="User name",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *     ),
+     *     @OA\Parameter(
+     *          name="surname",
+     *          in="query",
+     *          description="User surname",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *     ),
+     *     @OA\Response(response="201", description="Created"),
+     *     @OA\Response(response="422", description="Unprocessable Content"),
      * )
      */
     public function store(
-        Request $request,
+        CreateUserRequest $request,
         UserCreateService $service
     ): JsonResponse {
-        $user = $service->create($request->toArray());
+        $user = $service->create($request->validated());
 
         return new JsonResponse($user, ResponseAlias::HTTP_CREATED);
     }
@@ -67,13 +121,66 @@ class UserController extends Controller
      *     path="/api/users/{id}",
      *     tags={"Users"},
      *     description="Update user",
-     *     @OA\Response(response="200", description="success"),
-     *     security={{"sanctum": {}}}
+     *     security={{"sanctum": {}}},
+     *     @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          description="User id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *     @OA\Parameter(
+     *          name="email",
+     *          in="query",
+     *          description="User email",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *     ),
+     *     @OA\Parameter(
+     *          name="password",
+     *          in="query",
+     *          description="User password",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *     ),
+     *     @OA\Parameter(
+     *          name="name",
+     *          in="query",
+     *          description="User name",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *     ),
+     *     @OA\Parameter(
+     *          name="surname",
+     *          in="query",
+     *          description="User surname",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *     ),
+     *     @OA\Response(response="200", description="Success"),
+     *     @OA\Response(response="404", description="User not found"),
+     *     @OA\Response(response="422", description="Unprocessable Content"),
      * )
      */
-    public function update(User $user, Request $request): JsonResponse
-    {
-        $user->update($request->toArray());
+    public function update(
+        User              $user,
+        UserUpdateRequest $request
+    ): JsonResponse {
+        try {
+            $user = $user->update($request->validated());
+
+            if (!$user) {
+                throw new UserNotFoundException();
+            }
+        } catch (UserNotFoundException $exception) {
+            return new JsonResponse($exception->getMessage(), ResponseAlias::HTTP_NOT_FOUND);
+        }
 
         return new JsonResponse($user);
     }
@@ -83,13 +190,24 @@ class UserController extends Controller
      *     path="/api/users/{id}",
      *     tags={"Users"},
      *     description="Delete user",
+     *     security={{"sanctum": {}}},
+     *     @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          description="User id",
+     *          required=true
+     *     ),
      *     @OA\Response(response="200", description="success"),
-     *     security={{"sanctum": {}}}
      * )
      */
-    public function destroy(User $user): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
-        $user->delete();
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+        } catch (NotFoundHttpException $exception) {
+            return new JsonResponse($exception->getMessage(), ResponseAlias::HTTP_NOT_FOUND);
+        }
 
         return new JsonResponse();
     }

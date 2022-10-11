@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
 use OpenApi\Annotations as OA;
+use Illuminate\Http\JsonResponse;
+use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
@@ -33,9 +33,10 @@ class LoginController extends Controller
      *      )
      *   ),
      *     @OA\Response(response="200", description="success"),
+     *     @OA\Response(response="422", description="uprocesable entity"),
      * )
      */
-    public function login(Request $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
         try {
             $user = User::where(['email' => $request->email])->first();

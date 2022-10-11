@@ -41,6 +41,9 @@
                 "responses": {
                     "200": {
                         "description": "success"
+                    },
+                    "422": {
+                        "description": "uprocesable entity"
                     }
                 }
             }
@@ -157,6 +160,12 @@
                 ],
                 "description": "Get all users",
                 "operationId": "c457726701591d1183b53aa71fc13441",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "success"
@@ -169,9 +178,50 @@
                 ],
                 "description": "Add new user",
                 "operationId": "592819a0265360b2014512d6dbfaf0e7",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "User name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "surname",
+                        "in": "query",
+                        "description": "User surname",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
-                    "200": {
-                        "description": "success"
+                    "201": {
+                        "description": "Created"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content"
                     }
                 },
                 "security": [
@@ -199,6 +249,9 @@
                 "responses": {
                     "200": {
                         "description": "success"
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
                 },
                 "security": [
@@ -213,6 +266,14 @@
                 ],
                 "description": "Delete user",
                 "operationId": "fa56cffde745d3f152f95cbacd936c0b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "success"
@@ -230,9 +291,55 @@
                 ],
                 "description": "Update user",
                 "operationId": "872a537e8eb13c26c5542c7d73269a80",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "User email",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "User password",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "User name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "surname",
+                        "in": "path",
+                        "description": "User surname",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "User not found"
                     }
                 },
                 "security": [
