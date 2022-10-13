@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\RestaurantNotFoundException;
-use App\Http\Requests\UpdateRestaurantRequest;
 use Exception;
 use App\Models\User;
 use App\Models\Restaurant;
@@ -12,10 +10,13 @@ use OpenApi\Annotations as OA;
 use App\Validator\UserValidator;
 use Illuminate\Http\JsonResponse;
 use App\Validator\RestaurantValidator;
+use App\Http\Requests\ManageUserRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Service\RestaurantCreateService;
 use App\Service\RestaurantUpdateService;
+use App\Http\Requests\UpdateRestaurantRequest;
 use App\Http\Requests\CreateRestaurantRequest;
+use App\Exceptions\RestaurantNotFoundException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -209,15 +210,17 @@ class RestaurantController extends Controller
      *     @OA\Response(response="404", description="Restaurant not found"),
      * )
      */
-    public function manageUsers(Restaurant $restaurant, Request $request): JsonResponse
-    {
+    public function manageUsers(
+        Restaurant $restaurant,
+        ManageUserRequest $request
+    ): JsonResponse {
         if (is_null($restaurant->id))
         {
             return new JsonResponse(
                 throw new NotFoundHttpException('Restaurant not found'),
                 ResponseAlias::HTTP_NOT_FOUND);
         }
-        $data = $request->getContent();
+        $data = $request->validated();
 
         foreach ($data['users'] as $user) {
             if ($user['action'] == 'Attach') {
