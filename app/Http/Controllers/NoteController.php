@@ -114,6 +114,4 @@ class NoteController extends Controller
             }
         }
     }
-
-
 }
