@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\UserNotFoundException;
 use Exception;
 use App\Models\User;
 use OpenApi\Annotations as OA;
@@ -11,6 +10,7 @@ use App\Service\UserCreateService;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Exceptions\UserNotFoundException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

@@ -2,8 +2,8 @@
 
 namespace App\Service;
 
-use App\Exceptions\RestaurantNotFoundException;
 use App\Models\Restaurant;
+use App\Exceptions\RestaurantNotFoundException;
 
 class RestaurantUpdateService
 {

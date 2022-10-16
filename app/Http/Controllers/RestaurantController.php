@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\User;
 use App\Models\Restaurant;
-use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 use App\Validator\UserValidator;
 use Illuminate\Http\JsonResponse;
@@ -182,7 +181,7 @@ class RestaurantController extends Controller
 
     /**
      * @param Restaurant $restaurant
-     * @param Request $request
+     * @param ManageUserRequest $request
      * @return JsonResponse
      *
      * @OA\Patch(

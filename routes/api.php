@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RestaurantController;
@@ -29,6 +29,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::resource('/restaurants', RestaurantController::class);
     Route::patch('/restaurants/{id}/user', [RestaurantController::class, 'manageUsers']);
-    Route::get('/notes', [NoteController::class, 'index']);
-    Route::post('/notes', [NoteController::class, 'create']);
+    Route::controller(NoteController::class)->prefix('/notes')->group(function () {
+        Route::get('', 'index');
+        Route::post('', 'create');
+    });
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use OpenApi\Annotations as OA;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\LoginRequest;
@@ -44,7 +45,7 @@ class LoginController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 return new JsonResponse($user->createToken('API_TOKEN')->plainTextToken);
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return new JsonResponse($exception, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
