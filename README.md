@@ -28,5 +28,6 @@ Now when app is up we can go into our php container
 
     docker exec -it restaurants_laravel.test_1 bash
     composer install 
+    php artisan key:generate
     php artisan migrate
     php artisan db:seed
