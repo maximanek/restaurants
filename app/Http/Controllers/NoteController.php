@@ -68,6 +68,14 @@ class NoteController extends Controller
      *     path="/api/notes",
      *     tags={"Notes"},
      *     description="Add multiple notes to restaurants or users",
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *              )
+     *          )
+     *     ),
      *     @OA\Response(response="200", description="Success"),
      * )
      */

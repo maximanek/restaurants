@@ -90,6 +90,15 @@
                 ],
                 "description": "Add multiple notes to restaurants or users",
                 "operationId": "e28ffd9dcbbcb4e1b04a525ab9c13a01",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Success"
