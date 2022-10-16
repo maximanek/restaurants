@@ -13,10 +13,11 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Artisan::call('migrate:fresh');
         User::factory(10)->create();
         $this->call(RestaurantSeeder::class);
+        $this->call(NoteSeeder::class);
     }
 }

@@ -48,6 +48,55 @@
                 }
             }
         },
+        "/api/notes": {
+            "get": {
+                "tags": [
+                    "Notes"
+                ],
+                "description": "Get all users",
+                "operationId": "9a95bde5931986ad60b9f7f414ec425e",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "restaurant_id",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Notes"
+                ],
+                "description": "Add multiple notes to restaurants or users",
+                "operationId": "e28ffd9dcbbcb4e1b04a525ab9c13a01",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
         "/api/restaurants": {
             "get": {
                 "tags": [
