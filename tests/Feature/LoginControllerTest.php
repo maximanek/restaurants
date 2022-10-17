@@ -12,7 +12,7 @@ class LoginControllerTest extends AbstractTestCase
     {
         $user = User::first();
         $response = $this->postJson(
-            '/api/login',
+            route('api.login'),
             [
                 'email' => $user->email,
                 'password' => 'password'

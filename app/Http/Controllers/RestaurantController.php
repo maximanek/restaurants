@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant\PaginationConstant;
 use Exception;
 use App\Models\User;
 use App\Models\Restaurant;
@@ -39,7 +40,7 @@ class RestaurantController extends Controller
     public function index(PaginationRequest $request): JsonResponse
     {
         $limit = $request->validated('limit');
-        return new JsonResponse(Restaurant::paginate($limit ?? 15));
+        return new JsonResponse(Restaurant::paginate($limit ?? PaginationConstant::DEFAULT_LIMIT));
     }
 
     /**

@@ -13,7 +13,7 @@ class RestaurantControllerRemoveTest extends AbstractTestCase
     {
         $this->restaurant = Restaurant::first();
         $restaurant = $this->deleteJson(
-            uri: '/api/restaurants/' . $this->restaurant->id,
+            uri: route('api.restaurants.destroy', ['restaurant' => $this->restaurant->id]),
             headers: ['Authorization' => $this->getToken()]
         );
 
@@ -24,7 +24,7 @@ class RestaurantControllerRemoveTest extends AbstractTestCase
     {
         $this->restaurant = Restaurant::first();
         $restaurant = $this->deleteJson(
-            uri: '/api/restaurants/' . $this->restaurant->id,
+            uri: route('api.restaurants.destroy', ['restaurant' => $this->restaurant->id]),
             headers: ['Authorization' => $this->getToken()]
         );
 
@@ -36,7 +36,7 @@ class RestaurantControllerRemoveTest extends AbstractTestCase
         $this->restaurant = Restaurant::first();
         $id = $this->restaurant->id;
          $this->deleteJson(
-            uri: '/api/restaurants/' . $id,
+            uri: route('api.restaurants.destroy', ['restaurant' => $id]),
             headers: ['Authorization' => $this->getToken()]
         );
 

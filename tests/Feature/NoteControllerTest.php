@@ -26,7 +26,7 @@ class NoteControllerTest extends AbstractTestCase
         $restaurantDesc = 'Note about first restaurant';
 
         $response = $this->postJson(
-            '/api/notes',
+            route('api.notes.store'),
             [
                 'notes' => [
                     [
@@ -67,7 +67,7 @@ class NoteControllerTest extends AbstractTestCase
     public function test_create_note_validation(): void
     {
         $response = $this->postJson(
-            '/api/notes',
+            route('api.notes.store'),
             [
                 'notes' => [
                     [
@@ -81,7 +81,7 @@ class NoteControllerTest extends AbstractTestCase
         $response->assertStatus(422);
 
         $response = $this->postJson(
-            '/api/notes',
+            route('api.notes.store'),
             [
                 'notes' => [
                     [
@@ -99,7 +99,7 @@ class NoteControllerTest extends AbstractTestCase
 
     public function test_index(): void
     {
-        $response = $this->getJson('/api/notes', ['Authorization' => $this->getToken()]);
+        $response = $this->getJson(route('api.notes.index'), ['Authorization' => $this->getToken()]);
 
         $response->assertStatus(200);
     }
@@ -107,9 +107,13 @@ class NoteControllerTest extends AbstractTestCase
     public function test_pagination(): void
     {
 
-        $response = $this->getJson('/api/notes/?limit=2', ['Authorization' => $this->getToken()]);
+        $response = $this->getJson(
+            route('api.notes.index', ['limit' => 2]),
+            ['Authorization' => $this->getToken()]);
         $note = json_decode($response->getContent())->data[1];
-        $response = $this->getJson('/api/notes/?page=2&limit=1', ['Authorization' => $this->getToken()]);
+        $response = $this->getJson(
+            route('api.notes.index', ['page' => 2, 'limit' => 1]),
+            ['Authorization' => $this->getToken()]);
         $secondNote = json_decode($response->getContent())->data[0];
 
         $this->assertSame($note->id, $secondNote->id);
@@ -119,14 +123,14 @@ class NoteControllerTest extends AbstractTestCase
     public function test_filters(): void
     {
         $response = $this->getJson(
-            '/api/notes/?user_id=' . $this->user->id,
+            route('api.notes.index', ['user_id' => $this->user->id]),
             ['Authorization' => $this->getToken()]
         );
         $note = json_decode($response->getContent())->data[0];
         $this->assertSame($note->user_id, $this->user->id);
 
         $response = $this->getJson(
-            '/api/notes/?restaurant_id=' . $this->restaurant->id,
+            route('api.notes.index', ['restaurant_id' => $this->restaurant->id]),
             ['Authorization' => $this->getToken()]
         );
         $note = json_decode($response->getContent())->data[0];

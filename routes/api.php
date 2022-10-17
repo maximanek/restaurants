@@ -17,20 +17,28 @@ use App\Http\Controllers\RestaurantController;
 |
 */
 
-Route::post('/login', [LoginController::class, 'login']);
-Route::get('/users', [UserController::class, 'index']);
+Route::name('api.')->group(function () {
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::controller( UserController::class)->prefix('/users')->group(function () {
-        Route::post('','store');
-        Route::patch('/{id}','update');
-        Route::get('/{id}','show');
-        Route::delete('/{id}','destroy');
-    });
-    Route::resource('/restaurants', RestaurantController::class);
-    Route::patch('/restaurants/{id}/user', [RestaurantController::class, 'manageUsers']);
-    Route::controller(NoteController::class)->prefix('/notes')->group(function () {
-        Route::get('', 'index');
-        Route::post('', 'create');
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::controller(UserController::class)
+            ->prefix('/users')
+            ->name('user.')
+            ->group(function () {
+                Route::post('', 'store')->name('store');
+                Route::patch('/{id}', 'update')->name('update');
+                Route::get('/{id}', 'show')->name('show');
+                Route::delete('/{id}', 'destroy')->name('destroy');
+            });
+        Route::resource('/restaurants', RestaurantController::class);
+        Route::patch('/restaurants/{id}/user', [RestaurantController::class, 'manageUsers']);
+        Route::controller(NoteController::class)
+            ->prefix('/notes')
+            ->name('notes.')
+            ->group(function () {
+                Route::get('', 'index')->name('index');
+                Route::post('', 'store')->name('store');
+            });
     });
 });

@@ -7,12 +7,11 @@ use Tests\AbstractTestCase;
 
 class RestaurantControllerUpdateTest extends AbstractTestCase
 {
-
     public function test_status_code(): void
     {
         $restaurant = Restaurant::first();
         $response = $this->patchJson(
-            '/api/restaurants/'. $restaurant->id,
+            route('api.restaurants.update', ['restaurant' => $restaurant->id]),
             ['name' => 'MoreAwesomeChefs'],
             ['Authorization' => $this->getToken()]
         );
@@ -24,7 +23,7 @@ class RestaurantControllerUpdateTest extends AbstractTestCase
     {
         $restaurant = Restaurant::first();
         $response = $this->patchJson(
-            '/api/restaurants/'. $restaurant->id,
+            route('api.restaurants.update', ['restaurant' => $restaurant->id]),
             ['name' => 'EvenAwesomeChefs'],
             ['Authorization' => $this->getToken()]
         );
@@ -40,7 +39,7 @@ class RestaurantControllerUpdateTest extends AbstractTestCase
         $name = 'TopChefs';
         $restaurant = Restaurant::first();
         $response = $this->patchJson(
-            '/api/restaurants/'. $restaurant->id,
+            route('api.restaurants.update', ['restaurant' => $restaurant->id]),
             ['name' => $name],
             ['Authorization' => $this->getToken()]
         );
@@ -55,7 +54,7 @@ class RestaurantControllerUpdateTest extends AbstractTestCase
         $name = 'ChadChefs';
         $restaurant = Restaurant::first();
         $response = $this->patchJson(
-            '/api/restaurants/'. $restaurant->id,
+            route('api.restaurants.update', ['restaurant' => $restaurant->id]),
             ['name' => $name],
             ['Authorization' => $this->getToken()]
         );

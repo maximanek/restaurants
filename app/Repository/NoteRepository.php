@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\PaginationConstant;
 use App\Models\Note;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -23,6 +24,6 @@ class NoteRepository
             $notes->where('restaurant_id', $restaurantId);
         }
 
-        return $notes->paginate($limit ?? 15);
+        return $notes->paginate($limit ?? PaginationConstant::DEFAULT_LIMIT);
     }
 }

@@ -79,7 +79,7 @@ class NoteController extends Controller
      *     @OA\Response(response="200", description="Success"),
      * )
      */
-    public function create(
+    public function store(
         AddNoteRequest $request,
         NoteCreateService $noteCreateService
     ): JsonResponse {

@@ -10,7 +10,7 @@ class RestaurantControllerCreateTest extends AbstractTestCase
     public function test_status_code(): void
     {
         $response = $this->postJson(
-            '/api/restaurants',
+            route('api.restaurants.store'),
             ['name' => 'AwesomeChefs'],
             ['Authorization' => $this->getToken()]
         );
@@ -21,7 +21,7 @@ class RestaurantControllerCreateTest extends AbstractTestCase
     public function test_response_structure(): void
     {
         $response = $this->postJson(
-            '/api/restaurants',
+            route('api.restaurants.store'),
             ['name' => 'AwesomeChefs'],
             ['Authorization' => $this->getToken()]
         );
@@ -37,7 +37,7 @@ class RestaurantControllerCreateTest extends AbstractTestCase
         $name = 'AwesomeChefs';
 
         $response = $this->postJson(
-            '/api/restaurants',
+            route('api.restaurants.store'),
             ['name' => $name],
             ['Authorization' => $this->getToken()]
         );
@@ -52,7 +52,7 @@ class RestaurantControllerCreateTest extends AbstractTestCase
         $name = 'AwesomeChefs';
 
         $response = $this->postJson(
-            '/api/restaurants',
+            route('api.restaurants.store'),
             ['name' => $name],
             ['Authorization' => $this->getToken()]
         );
