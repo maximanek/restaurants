@@ -14,6 +14,7 @@ Api made for Recruitment task for [WebChefs](https://www.webchefs.tech/)
 
 ## Deployment
     git clone https://github.com/maximanek/restaurants.git
+    cd restaurants
     cp .env.example .env
 
 Since we don't have vendor directory we have to run composer manually
@@ -31,3 +32,18 @@ Now when app is up we can go into our php container
     php artisan key:generate
     php artisan migrate
     php artisan db:seed
+
+## Useful commands
+
+When you are in repo directory you can add sail alias, by default, Sail commands are invoked using the vendor/bin/sail script that is included with all new Laravel applications:
+    
+    alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+
+Starting and stopping app
+
+    sail up -d 
+    sail stop
+
+## Testing
+
+    sail test
